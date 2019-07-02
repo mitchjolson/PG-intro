@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+}
+
+main {
+    width: 90%;
+    margin: auto;
+}
+
+section {
+    padding: 10px;
+}
+
+header {
+    padding: 10px;
+}
