@@ -13,9 +13,24 @@ app.get( '/music', (req, res) => {
     pool.query(sqlText)
     .then( (response) => {
         console.log( 'Got music from the database', response );
-        res.send(response);
+        res.send(response.rows);
     }).catch( (error) => {
         console.log('Error getting music from db', error)
+        res.sendStatus(500);
+    })
+})
+
+app.post( '/music', (req, res) => {
+    const newSong = req.body;
+    console.log('Adding new song', newSong);
+    const sqlText = `INSERT INTO "songs"("rank", "artist", "track", "published") 
+    VALUES($1, $2, $3, $4);`;
+    const values = [newSong.rank, newSong.track, newSong.artist, newSong.published];
+    pool.query(sqlText, values)
+    .then( (response) => {
+        res.sendStatus(201);
+    }).catch((error) => {
+        console.log('Error adding song to db', error)
         res.sendStatus(500);
     })
 })
